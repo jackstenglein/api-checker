@@ -1,5 +1,5 @@
 //
-//  SecondViewController.h
+//  HistoryViewController.h
 //  API Checker
 //
 //  Created by Jack Stenglein on 5/12/17.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController
-
+@interface HistoryViewController : UIViewController
 
 @end
-

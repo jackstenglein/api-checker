@@ -1,5 +1,5 @@
 //
-//  FirstViewController.h
+//  RequestsViewController.h
 //  API Checker
 //
 //  Created by Jack Stenglein on 5/12/17.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
-
+@interface RequestsViewController : UIViewController
 
 @end
-

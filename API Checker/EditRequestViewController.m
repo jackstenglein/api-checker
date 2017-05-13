@@ -28,6 +28,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUpUI];
+    selectedTimeout = 5;
 }
 
 
@@ -74,6 +75,10 @@
     hide2.hidden = YES;
 }
 
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    [self closeSelectionView:nil];
+    return YES;
+}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -122,6 +127,28 @@
     return [NSString stringWithFormat:@"%lu", (row+1)*10];
 }
 
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    if(selectionType == MethodType) {
+        selectedMethodType = (int)row;
+        NSString *title;
+        switch(selectedMethodType) {
+            case 0:
+                title = @"GET";
+                break;
+            case 1:
+                title = @"POST";
+                break;
+            case 2:
+                title = @"PUT";
+                break;
+        }
+        [self.methodTypeButton setTitle:title forState:UIControlStateNormal];
+    } else {
+        selectedTimeout = (int)row;
+        [self.timeoutButton setTitle:[NSString stringWithFormat:@"%ds", (selectedTimeout+1)*10] forState:UIControlStateNormal];
+    }
+}
+
 -(void)raiseSelectionView {
     self.selectionViewBottom.constant = 0;
     [UIView animateWithDuration:0.3 animations:^{
@@ -132,6 +159,7 @@
 - (IBAction)selectMethodType:(id)sender {
     selectionType = MethodType;
     [self.picker reloadComponent:0];
+    [self.picker selectRow:selectedMethodType inComponent:0 animated:NO];
     self.selectionLabel.text = @"HTTP Method Type";
     if(self.selectionViewBottom.constant < 0) {
         self.selectionViewHeight.constant = 162;
@@ -158,6 +186,7 @@
 - (IBAction)selectTimeout:(id)sender {
     selectionType = Timeout;
     [self.picker reloadComponent:0];
+    [self.picker selectRow:selectedTimeout inComponent:0 animated:NO];
     self.selectionLabel.text = @"Request Timeout";
     self.selectionViewHeight.constant = 250;
     [self raiseSelectionView];
@@ -167,12 +196,5 @@
     [UIView animateWithDuration:0.3 animations:^{
         [self.view layoutIfNeeded];
     }];
-    
-    if(selectionType == MethodType) {
-        selectedMethodType = (int)[self.picker selectedRowInComponent:0];
-    } else {
-        selectedTimeout = (int)[self.picker selectedRowInComponent:0];
-        
-    }
 }
 @end

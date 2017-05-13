@@ -139,7 +139,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yk0-SY-EvB" userLabel="Method Type Button">
                                                 <rect key="frame" x="0.0" y="0.0" width="72" height="50"/>
                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
-                                                <state key="normal" title="POST">
+                                                <state key="normal" title="GET">
                                                     <color key="titleColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
@@ -183,7 +183,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IDZ-zp-CKO" userLabel="Method Type Button">
                                                 <rect key="frame" x="0.0" y="0.0" width="72" height="50"/>
                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
-                                                <state key="normal" title="20s">
+                                                <state key="normal" title="60s">
                                                     <color key="titleColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
@@ -208,7 +208,7 @@
                                                 <rect key="frame" x="5" y="17" width="275" height="17"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="done"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="v5Q-ZZ-taG" id="HEC-6e-xpK"/>
                                                 </connections>

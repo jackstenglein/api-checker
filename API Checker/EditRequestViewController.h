@@ -13,7 +13,7 @@ typedef enum {
     Timeout
 }SelectionTypes;
 
-@interface EditRequestViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface EditRequestViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *methodTypeView;
 - (IBAction)selectMethodType:(id)sender;
@@ -37,5 +37,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *selectionViewBottom;
 @property (strong, nonatomic) IBOutlet UIButton *timeoutButton;
 @property (strong, nonatomic) IBOutlet UIButton *methodTypeButton;
+
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

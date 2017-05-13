@@ -13,6 +13,8 @@
                 alpha:1.0]
 
 #import "EditRequestViewController.h"
+#import "DataPair.h"
+#import "DictionaryTableViewCell.h"
 
 @interface EditRequestViewController ()
 
@@ -22,6 +24,7 @@
     SelectionTypes selectionType;
     int selectedMethodType;
     int selectedTimeout;
+    NSMutableArray<DataPair *> *bodyData;
 }
 
 - (void)viewDidLoad {
@@ -29,6 +32,28 @@
     // Do any additional setup after loading the view.
     [self setUpUI];
     selectedTimeout = 5;
+    bodyData = [[NSMutableArray alloc] init];
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return bodyData.count + 1;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    DictionaryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"dictionaryTableViewCell" forIndexPath:indexPath];
+    
+    int row = (int)indexPath.row;
+    if(row < bodyData.count) {
+        cell.keyTextField.text = [bodyData objectAtIndex:row].key;
+        cell.valueTextField.text = [bodyData objectAtIndex:row].value;
+    } else {
+        cell.keyTextField.text = @"";
+        cell.valueTextField.text = @"";
+    }
+    cell.keyTextField.tag = row;
+    cell.valueTextField.tag = row;
+    
+    return cell;
 }
 
 
@@ -60,6 +85,8 @@
     self.headersLine.hidden = YES;
     
     self.selectionViewBottom.constant = -self.selectionViewHeight.constant;
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 
@@ -81,6 +108,27 @@
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    if(textField.tag > -1) {
+        DictionaryTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:textField.tag inSection:0]];
+        NSString *key = cell.keyTextField.text;
+        NSString *value = cell.valueTextField.text;
+        
+        // we need to remove a row
+        if([key isEqualToString:@""] && [value isEqualToString:@""]) {
+            if(textField.tag < bodyData.count)
+                [bodyData removeObjectAtIndex:textField.tag];
+        } else {
+            if(textField.tag == bodyData.count) {
+                [bodyData addObject:[[DataPair alloc] initWithKey:key andValue:value]];
+            } else {
+                [bodyData replaceObjectAtIndex:textField.tag withObject:[[DataPair alloc] initWithKey:key andValue:value]];
+            }
+        }
+        
+        [self.tableView reloadData];
+    }
+    
     [textField resignFirstResponder];
     return NO;
 }
@@ -112,19 +160,28 @@
     }
 }
 
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+
+-(NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    
+    NSString *title;
+    
     if(selectionType == MethodType) {
         switch(row) {
             case 0:
-                return @"GET";
+                title = @"GET";
+                break;
             case 1:
-                return @"POST";
+                title = @"POST";
+                break;
             case 2:
-                return @"PUT";
+                title = @"PUT";
+                break;
         }
+    } else {
+        title = [NSString stringWithFormat:@"%lu", (row+1)*10];
     }
     
-    return [NSString stringWithFormat:@"%lu", (row+1)*10];
+    return [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:UIColorFromHex(0x808080), NSFontAttributeName: self.timeoutButton.titleLabel.font}];
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {

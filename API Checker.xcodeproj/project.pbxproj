@@ -20,6 +20,8 @@
 		C9442CC61EC64DDA00BE04AC /* savedRequests.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9442CC51EC64DDA00BE04AC /* savedRequests.plist */; };
 		C9442CC91EC64F7900BE04AC /* RequestTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CC81EC64F7900BE04AC /* RequestTableViewCell.m */; };
 		C9442CCC1EC6542F00BE04AC /* EditRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CCB1EC6542F00BE04AC /* EditRequestViewController.m */; };
+		C9442CCF1EC68BC500BE04AC /* DictionaryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CCE1EC68BC500BE04AC /* DictionaryTableViewCell.m */; };
+		C9442CD21EC6910300BE04AC /* DataPair.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CD11EC6910300BE04AC /* DataPair.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,10 @@
 		C9442CC81EC64F7900BE04AC /* RequestTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestTableViewCell.m; sourceTree = "<group>"; };
 		C9442CCA1EC6542F00BE04AC /* EditRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditRequestViewController.h; sourceTree = "<group>"; };
 		C9442CCB1EC6542F00BE04AC /* EditRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditRequestViewController.m; sourceTree = "<group>"; };
+		C9442CCD1EC68BC500BE04AC /* DictionaryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryTableViewCell.h; sourceTree = "<group>"; };
+		C9442CCE1EC68BC500BE04AC /* DictionaryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DictionaryTableViewCell.m; sourceTree = "<group>"; };
+		C9442CD01EC6910300BE04AC /* DataPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataPair.h; sourceTree = "<group>"; };
+		C9442CD11EC6910300BE04AC /* DataPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataPair.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +133,11 @@
 				C9442CC81EC64F7900BE04AC /* RequestTableViewCell.m */,
 				C9442CCA1EC6542F00BE04AC /* EditRequestViewController.h */,
 				C9442CCB1EC6542F00BE04AC /* EditRequestViewController.m */,
+				C9442CCD1EC68BC500BE04AC /* DictionaryTableViewCell.h */,
+				C9442CCE1EC68BC500BE04AC /* DictionaryTableViewCell.m */,
 				C9442C8D1EC6437700BE04AC /* Main.storyboard */,
+				C9442CD01EC6910300BE04AC /* DataPair.h */,
+				C9442CD11EC6910300BE04AC /* DataPair.m */,
 				C9442C901EC6437700BE04AC /* Assets.xcassets */,
 				C9442C921EC6437700BE04AC /* LaunchScreen.storyboard */,
 				C9442C951EC6437700BE04AC /* Info.plist */,
@@ -305,6 +315,8 @@
 				C9442CC91EC64F7900BE04AC /* RequestTableViewCell.m in Sources */,
 				C9442C831EC6437700BE04AC /* main.m in Sources */,
 				C9442CBF1EC6468500BE04AC /* SettingsViewController.m in Sources */,
+				C9442CD21EC6910300BE04AC /* DataPair.m in Sources */,
+				C9442CCF1EC68BC500BE04AC /* DictionaryTableViewCell.m in Sources */,
 				C9442CB91EC6465F00BE04AC /* RequestsViewController.m in Sources */,
 				C9442CBC1EC6467900BE04AC /* HistoryViewController.m in Sources */,
 			);

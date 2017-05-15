@@ -22,6 +22,7 @@
 
 @implementation EditRequestViewController {
     SelectionTypes selectionType;
+    FooterTypes footerType;
     int selectedMethodType;
     int selectedTimeout;
     NSMutableArray<DataPair *> *bodyData;
@@ -36,7 +37,12 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return bodyData.count + 1;
+    switch (footerType) {
+        case Body:
+            return bodyData.count + 1;
+        default:
+            return 0;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -225,6 +231,7 @@
 }
 
 - (IBAction)selectFooterType:(UIButton *)sender {
+    footerType = (FooterTypes)sender.tag;
     switch(sender.tag) {
         case 0:
             [self showButton:self.bodyButton hideButton:self.authButton andButton:self.headersButton];
@@ -239,6 +246,8 @@
             [self showLine:self.headersLine hideLine:self.bodyLine andLine:self.authLine];
             break;
     }
+    
+    [self.tableView reloadData];
 }
 - (IBAction)selectTimeout:(id)sender {
     selectionType = Timeout;

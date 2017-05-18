@@ -316,8 +316,14 @@
         [body setObject:data.value forKey:data.key];
     }
     
+    NSMutableDictionary *headers = [[NSMutableDictionary alloc] init];
+    for(int i = 0; i < headers.count; i++) {
+        DataPair *data = [headersData objectAtIndex:i];
+        [headers setObject:data.value forKey:data.key];
+    }
+    
     NSNumber *timeout = [[NSNumber alloc] initWithInt:(selectedTimeout+1)*10];
-    NSDictionary *requestDict = [[NSDictionary alloc] initWithObjects:@[methodType, timeout, self.requestStringField.text, self.requestNameField.text, body] forKeys:@[@"methodType", @"timeout", @"requestURL", @"requestName", @"body"]];
+    NSDictionary *requestDict = [[NSDictionary alloc] initWithObjects:@[methodType, timeout, self.requestStringField.text, self.requestNameField.text, body, headers] forKeys:@[@"methodType", @"timeout", @"requestURL", @"requestName", @"body", @"headers"]];
     [plistArray addObject:requestDict];
     NSLog(@"Plist array after save: %@", plistArray);
     

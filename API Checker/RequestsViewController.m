@@ -18,6 +18,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"savedRequests.plist"];
+    
+    if(![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
+        NSLog(@"File not found--rvm");
+        plistPath = [[NSBundle mainBundle] pathForResource:@"savedRequests" ofType:@"plist"];
+    }
+    
+    NSMutableArray *plistArray = [[[NSMutableArray alloc] initWithContentsOfFile:plistPath] mutableCopy];
+    NSLog(@"Plist array: %@", plistArray);
+    
 }
 
 
@@ -39,5 +51,19 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(IBAction)returnFromNewRequest:(UIStoryboardSegue *)segue {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"savedRequests.plist"];
+    
+    if(![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
+        NSLog(@"File not found--rvm");
+        plistPath = [[NSBundle mainBundle] pathForResource:@"savedRequests" ofType:@"plist"];
+    }
+    
+    NSMutableArray *plistArray = [[[NSMutableArray alloc] initWithContentsOfFile:plistPath] mutableCopy];
+    NSLog(@"Plist array: %@", plistArray);
+}
 
 @end

@@ -40,6 +40,10 @@ typedef enum {
  */
 @property (strong, nonatomic) IBOutlet UIView *requestStringView;
 
+
+@property (strong, nonatomic) IBOutlet UITextField *requestStringField;
+
+
 /*!
  @brief Displays the current timeout for the request.
  @discussion This view contains the button that allows the user to switch the timeout. The view requires an outlet to change the border styling.
@@ -57,6 +61,10 @@ typedef enum {
  @discussion This view contains the TextField that allows the user to enter the request URL. The view requires an outlet to change the border styling.
  */
 @property (strong, nonatomic) IBOutlet UIView *requestNameView;
+
+
+@property (strong, nonatomic) IBOutlet UITextField *requestNameField;
+
 
 /*!
  @brief Changes the footer to the body.
@@ -155,5 +163,8 @@ typedef enum {
  @param sender The button that triggered the method call.
  */
 - (IBAction)closeSelectionView:(id)sender;
+
+
+- (IBAction)saveRequest:(id)sender;
 
 @end

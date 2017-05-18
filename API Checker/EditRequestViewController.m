@@ -26,6 +26,7 @@
     int selectedMethodType;
     int selectedTimeout;
     NSMutableArray<DataPair *> *bodyData;
+    NSMutableArray<DataPair *> *headersData;
 }
 
 - (void)viewDidLoad {
@@ -34,12 +35,17 @@
     [self setUpUI];
     selectedTimeout = 5;
     bodyData = [[NSMutableArray alloc] init];
+    headersData = [[NSMutableArray alloc] init];
+    [headersData addObject:[[DataPair alloc] initWithKey:@"content-type" andValue:@"application/json"]];
+    [headersData addObject:[[DataPair alloc] initWithKey:@"cache-control" andValue:@"no-cache"]];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (footerType) {
         case Body:
             return bodyData.count + 1;
+        case Headers:
+            return headersData.count + 1;
         default:
             return 0;
     }
@@ -47,11 +53,23 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DictionaryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"dictionaryTableViewCell" forIndexPath:indexPath];
+    NSArray<DataPair *> *dataDict;
+    switch(footerType) {
+        case Body:
+            dataDict = bodyData;
+            break;
+        case Headers:
+            dataDict = headersData;
+            break;
+        case Authorization:
+            dataDict = bodyData;
+            break;
+    }
     
     int row = (int)indexPath.row;
-    if(row < bodyData.count) {
-        cell.keyTextField.text = [bodyData objectAtIndex:row].key;
-        cell.valueTextField.text = [bodyData objectAtIndex:row].value;
+    if(row < dataDict.count) {
+        cell.keyTextField.text = [dataDict objectAtIndex:row].key;
+        cell.valueTextField.text = [dataDict objectAtIndex:row].value;
     } else {
         cell.keyTextField.text = @"";
         cell.valueTextField.text = @"";
@@ -187,7 +205,7 @@
         title = [NSString stringWithFormat:@"%lu", (row+1)*10];
     }
     
-    return [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:UIColorFromHex(0x808080), NSFontAttributeName: self.timeoutButton.titleLabel.font}];
+    return [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor blackColor], NSFontAttributeName: self.timeoutButton.titleLabel.font}];
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
@@ -232,16 +250,16 @@
 
 - (IBAction)selectFooterType:(UIButton *)sender {
     footerType = (FooterTypes)sender.tag;
-    switch(sender.tag) {
-        case 0:
+    switch(footerType) {
+        case Body:
             [self showButton:self.bodyButton hideButton:self.authButton andButton:self.headersButton];
             [self showLine:self.bodyLine hideLine:self.authLine andLine:self.headersLine];
             break;
-        case 1:
+        case Authorization:
             [self showButton:self.authButton hideButton:self.bodyButton andButton:self.headersButton];
             [self showLine:self.authLine hideLine:self.bodyLine andLine:self.headersLine];
             break;
-        case 2:
+        case Headers:
             [self showButton:self.headersButton hideButton:self.bodyButton andButton:self.authButton];
             [self showLine:self.headersLine hideLine:self.bodyLine andLine:self.authLine];
             break;
@@ -263,4 +281,50 @@
         [self.view layoutIfNeeded];
     }];
 }
+
+- (IBAction)saveRequest:(id)sender {
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"savedRequests.plist"];
+    
+    /*if(![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
+        NSLog(@"File not found");
+        plistPath = [[NSBundle mainBundle] pathForResource:@"savedRequests" ofType:@"plist"];
+    }*/
+    
+    NSMutableArray *plistArray = [[[NSMutableArray alloc] initWithContentsOfFile:plistPath] mutableCopy];
+    if(plistArray == nil) plistArray = [[NSMutableArray alloc] init];
+    NSLog(@"Plist array before save: %@", plistArray);
+    
+    NSString *methodType;
+    switch (selectedMethodType) {
+        case 0:
+            methodType = @"GET";
+            break;
+        case 1:
+            methodType = @"POST";
+            break;
+        case 2:
+            methodType = @"PUT";
+            break;
+    }
+    
+    NSMutableDictionary *body = [[NSMutableDictionary alloc] init];
+    for(int i = 0; i < bodyData.count; i++) {
+        DataPair *data = [bodyData objectAtIndex:i];
+        [body setObject:data.value forKey:data.key];
+    }
+    
+    NSNumber *timeout = [[NSNumber alloc] initWithInt:(selectedTimeout+1)*10];
+    NSDictionary *requestDict = [[NSDictionary alloc] initWithObjects:@[methodType, timeout, self.requestStringField.text, self.requestNameField.text, body] forKeys:@[@"methodType", @"timeout", @"requestURL", @"requestName", @"body"]];
+    [plistArray addObject:requestDict];
+    NSLog(@"Plist array after save: %@", plistArray);
+    
+    BOOL saved = [plistArray writeToFile:plistPath atomically:YES];
+    if(saved) NSLog(@"Saved!");
+    else NSLog(@"Save failed");
+}
+
+
 @end

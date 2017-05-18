@@ -17,7 +17,6 @@
 		C9442CB91EC6465F00BE04AC /* RequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CB81EC6465F00BE04AC /* RequestsViewController.m */; };
 		C9442CBC1EC6467900BE04AC /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CBB1EC6467900BE04AC /* HistoryViewController.m */; };
 		C9442CBF1EC6468500BE04AC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CBE1EC6468500BE04AC /* SettingsViewController.m */; };
-		C9442CC61EC64DDA00BE04AC /* savedRequests.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9442CC51EC64DDA00BE04AC /* savedRequests.plist */; };
 		C9442CC91EC64F7900BE04AC /* RequestTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CC81EC64F7900BE04AC /* RequestTableViewCell.m */; };
 		C9442CCC1EC6542F00BE04AC /* EditRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CCB1EC6542F00BE04AC /* EditRequestViewController.m */; };
 		C9442CCF1EC68BC500BE04AC /* DictionaryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CCE1EC68BC500BE04AC /* DictionaryTableViewCell.m */; };
@@ -62,7 +61,6 @@
 		C9442CBB1EC6467900BE04AC /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		C9442CBD1EC6468500BE04AC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		C9442CBE1EC6468500BE04AC /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		C9442CC51EC64DDA00BE04AC /* savedRequests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = savedRequests.plist; sourceTree = "<group>"; };
 		C9442CC71EC64F7900BE04AC /* RequestTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestTableViewCell.h; sourceTree = "<group>"; };
 		C9442CC81EC64F7900BE04AC /* RequestTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestTableViewCell.m; sourceTree = "<group>"; };
 		C9442CCA1EC6542F00BE04AC /* EditRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditRequestViewController.h; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 				C9442C901EC6437700BE04AC /* Assets.xcassets */,
 				C9442C921EC6437700BE04AC /* LaunchScreen.storyboard */,
 				C9442C951EC6437700BE04AC /* Info.plist */,
-				C9442CC51EC64DDA00BE04AC /* savedRequests.plist */,
 				C9442C811EC6437700BE04AC /* Supporting Files */,
 			);
 			path = "API Checker";
@@ -282,7 +279,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9442CC61EC64DDA00BE04AC /* savedRequests.plist in Resources */,
 				C9442C941EC6437700BE04AC /* LaunchScreen.storyboard in Resources */,
 				C9442C911EC6437700BE04AC /* Assets.xcassets in Resources */,
 				C9442C8F1EC6437700BE04AC /* Main.storyboard in Resources */,

@@ -21,6 +21,7 @@
 		C9442CCC1EC6542F00BE04AC /* EditRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CCB1EC6542F00BE04AC /* EditRequestViewController.m */; };
 		C9442CCF1EC68BC500BE04AC /* DictionaryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CCE1EC68BC500BE04AC /* DictionaryTableViewCell.m */; };
 		C9442CD21EC6910300BE04AC /* DataPair.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CD11EC6910300BE04AC /* DataPair.m */; };
+		C9F1ED0A1ECD463600888439 /* ConnectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F1ED091ECD463600888439 /* ConnectionController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,8 @@
 		C9442CCE1EC68BC500BE04AC /* DictionaryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DictionaryTableViewCell.m; sourceTree = "<group>"; };
 		C9442CD01EC6910300BE04AC /* DataPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataPair.h; sourceTree = "<group>"; };
 		C9442CD11EC6910300BE04AC /* DataPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataPair.m; sourceTree = "<group>"; };
+		C9F1ED081ECD463600888439 /* ConnectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionController.h; sourceTree = "<group>"; };
+		C9F1ED091ECD463600888439 /* ConnectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,8 @@
 			children = (
 				C9442C841EC6437700BE04AC /* AppDelegate.h */,
 				C9442C851EC6437700BE04AC /* AppDelegate.m */,
+				C9F1ED081ECD463600888439 /* ConnectionController.h */,
+				C9F1ED091ECD463600888439 /* ConnectionController.m */,
 				C9442CB71EC6465F00BE04AC /* RequestsViewController.h */,
 				C9442CB81EC6465F00BE04AC /* RequestsViewController.m */,
 				C9442CBA1EC6467900BE04AC /* HistoryViewController.h */,
@@ -133,9 +138,9 @@
 				C9442CCB1EC6542F00BE04AC /* EditRequestViewController.m */,
 				C9442CCD1EC68BC500BE04AC /* DictionaryTableViewCell.h */,
 				C9442CCE1EC68BC500BE04AC /* DictionaryTableViewCell.m */,
-				C9442C8D1EC6437700BE04AC /* Main.storyboard */,
 				C9442CD01EC6910300BE04AC /* DataPair.h */,
 				C9442CD11EC6910300BE04AC /* DataPair.m */,
+				C9442C8D1EC6437700BE04AC /* Main.storyboard */,
 				C9442C901EC6437700BE04AC /* Assets.xcassets */,
 				C9442C921EC6437700BE04AC /* LaunchScreen.storyboard */,
 				C9442C951EC6437700BE04AC /* Info.plist */,
@@ -307,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9442C861EC6437700BE04AC /* AppDelegate.m in Sources */,
+				C9F1ED0A1ECD463600888439 /* ConnectionController.m in Sources */,
 				C9442CCC1EC6542F00BE04AC /* EditRequestViewController.m in Sources */,
 				C9442CC91EC64F7900BE04AC /* RequestTableViewCell.m in Sources */,
 				C9442C831EC6437700BE04AC /* main.m in Sources */,

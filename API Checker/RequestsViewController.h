@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ConnectionController.h"
 
-@interface RequestsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface RequestsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ConnectionControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *requestsTableView;
+- (IBAction)editRequests:(id)sender;
 
 @end

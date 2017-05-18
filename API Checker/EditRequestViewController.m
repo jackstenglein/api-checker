@@ -288,11 +288,6 @@
     NSString *documentsPath = [paths objectAtIndex:0];
     NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"savedRequests.plist"];
     
-    /*if(![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
-        NSLog(@"File not found");
-        plistPath = [[NSBundle mainBundle] pathForResource:@"savedRequests" ofType:@"plist"];
-    }*/
-    
     NSMutableArray *plistArray = [[[NSMutableArray alloc] initWithContentsOfFile:plistPath] mutableCopy];
     if(plistArray == nil) plistArray = [[NSMutableArray alloc] init];
     NSLog(@"Plist array before save: %@", plistArray);

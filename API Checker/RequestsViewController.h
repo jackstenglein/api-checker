@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *requestsTableView;
 - (IBAction)editRequests:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *editButton;
 
 @end

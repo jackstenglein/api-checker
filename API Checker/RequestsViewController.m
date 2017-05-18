@@ -14,9 +14,10 @@
 @end
 
 @implementation RequestsViewController {
-    NSArray *savedRequests;
+    NSMutableArray *savedRequests;
     NSMutableArray *receivedResponses;
     int currentRequest;
+    NSString *plistPath;
 }
 
 - (void)viewDidLoad {
@@ -25,19 +26,20 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
-    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"savedRequests.plist"];
+    plistPath = [documentsPath stringByAppendingPathComponent:@"savedRequests.plist"];
     
     if(![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
         NSLog(@"File not found--rvm");
         plistPath = [[NSBundle mainBundle] pathForResource:@"savedRequests" ofType:@"plist"];
     }
     
-    savedRequests = [[NSArray alloc] initWithContentsOfFile:plistPath];
+    savedRequests = [[[NSMutableArray alloc] initWithContentsOfFile:plistPath] mutableCopy];
     if(savedRequests == nil) {
-        savedRequests = [[NSArray alloc] init];
+        savedRequests = [[NSMutableArray alloc] init];
     }
     
     [self makeRequests];
+    
 }
 
 -(void)makeRequests {
@@ -83,6 +85,26 @@
     return cell;
 }
 
+-(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+-(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    NSDictionary *request = [savedRequests objectAtIndex:sourceIndexPath.row];
+    [savedRequests removeObjectAtIndex:sourceIndexPath.row];
+    [savedRequests insertObject:request atIndex:destinationIndexPath.row];
+    NSLog(@"Saved requests after move: %@", savedRequests);
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //add code here for when you hit delete
+        [tableView beginUpdates];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        [savedRequests removeObjectAtIndex:indexPath.row];
+        [tableView endUpdates];
+    }
+}
 /*
 #pragma mark - Navigation
 
@@ -94,9 +116,6 @@
 */
 
 -(IBAction)returnFromNewRequest:(UIStoryboardSegue *)segue {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0];
-    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"savedRequests.plist"];
     
     if(![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
         NSLog(@"File not found--rvm");
@@ -108,6 +127,16 @@
 }
 
 - (IBAction)editRequests:(id)sender {
-    [self.requestsTableView setEditing:YES animated:YES];
+    
+    [self.requestsTableView setEditing:!self.requestsTableView.isEditing animated:YES];
+    
+    if(self.requestsTableView.isEditing) {
+        [self.editButton setTitle:@"Done" forState:UIControlStateNormal];
+    } else {
+        [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
+        [savedRequests writeToFile:plistPath atomically:YES];
+    }
+    
+    
 }
 @end

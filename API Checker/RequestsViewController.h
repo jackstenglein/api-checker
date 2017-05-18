@@ -15,4 +15,6 @@
 - (IBAction)editRequests:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;
 
+- (IBAction)addRequest:(id)sender;
+
 @end

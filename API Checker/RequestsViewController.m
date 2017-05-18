@@ -47,10 +47,12 @@
     receivedResponses = [[NSMutableArray alloc] init];
     currentRequest = 0;
     
-    NSDictionary *request = [savedRequests objectAtIndex:currentRequest];
-    ConnectionController *connection = [[ConnectionController alloc] initWithURL:[request objectForKey:@"requestURL"] methodType:[request objectForKey:@"methodType"] body:[request objectForKey:@"body"] andHeaders:[request objectForKey:@"headers"]];
-    connection.delegate = self;
-    [connection makeRequest];
+    if(savedRequests.count > 0) {
+        NSDictionary *request = [savedRequests objectAtIndex:currentRequest];
+        ConnectionController *connection = [[ConnectionController alloc] initWithURL:[request objectForKey:@"requestURL"] methodType:[request objectForKey:@"methodType"] body:[request objectForKey:@"body"] andHeaders:[request objectForKey:@"headers"]];
+        connection.delegate = self;
+        [connection makeRequest];
+    }
 }
 
 -(void)connectionFailed:(id)connection error:(NSError *)error {
@@ -59,7 +61,7 @@
 }
 
 -(void)connectionFinished:(id)connection response:(NSDictionary *)response {
-    NSLog(@"Response: %@", response);
+    NSLog(@"JSON Response: %@", response);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,6 +87,15 @@
     return cell;
 }
 
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Prevent swipe to delete
+    if (tableView.editing) {
+        return UITableViewCellEditingStyleDelete;
+    }
+    
+    return UITableViewCellEditingStyleNone;
+}
+
 -(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
@@ -93,7 +104,6 @@
     NSDictionary *request = [savedRequests objectAtIndex:sourceIndexPath.row];
     [savedRequests removeObjectAtIndex:sourceIndexPath.row];
     [savedRequests insertObject:request atIndex:destinationIndexPath.row];
-    NSLog(@"Saved requests after move: %@", savedRequests);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -138,5 +148,8 @@
     }
     
     
+}
+- (IBAction)addRequest:(id)sender {
+    [self performSegueWithIdentifier:@"showEditRequest" sender:nil];
 }
 @end

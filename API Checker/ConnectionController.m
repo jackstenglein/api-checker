@@ -8,7 +8,9 @@
 
 #import "ConnectionController.h"
 
-@implementation ConnectionController
+@implementation ConnectionController {
+    NSTimeInterval start;
+}
 
 -(id)init {
     return [self initWithURL:nil methodType: nil body:nil andHeaders:nil];
@@ -28,6 +30,7 @@
 
 -(void)makeRequest {
     
+    start = 0;
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10.0];
     [request setHTTPMethod:self.methodType];
@@ -40,14 +43,32 @@
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        NSLog(@"Start inside block: %f", start);
+        int time = (int)(([NSDate timeIntervalSinceReferenceDate] - start) * 1000);
+        NSNumber *responseTime = [[NSNumber alloc] initWithInt:time];
+        
         if (error) {
             [self.delegate connectionFailed:self error:error];
         } else {
             NSLog(@"URL response: %@", response);
-            [self.delegate connectionFinished:self response:[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]];
+            
+            NSMutableDictionary *res = [[NSMutableDictionary alloc] init];
+            [res setObject:response.URL.absoluteString forKey:@"requestURL"];
+            [res setObject:[[NSNumber alloc] initWithInteger:((NSHTTPURLResponse *)response).statusCode] forKey:@"statusCode"];
+            [res setObject:responseTime forKey:@"responseTime"];
+            
+            NSDictionary *body = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            if(body != nil) {
+                [res setObject:body forKey:@"responseBody"];
+            }
+            
+            [self.delegate connectionFinished:self response:res];
         }
     }];
     
+    start = [NSDate timeIntervalSinceReferenceDate];
+    NSLog(@"Start outside block: %f", start);
     [dataTask resume];
 }
 

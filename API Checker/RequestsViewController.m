@@ -25,6 +25,9 @@ alpha:1.0]
     NSMutableArray *receivedResponses;
     int currentRequest;
     NSString *plistPath;
+    bool arbirtraryLoad;
+    bool requesting;
+    int selectedRequest;
 }
 
 - (void)viewDidLoad {
@@ -42,8 +45,9 @@ alpha:1.0]
     }
     
     savedRequests = [[[NSMutableArray alloc] initWithContentsOfFile:plistPath] mutableCopy];
-    if(savedRequests == nil) {
+    if(savedRequests == nil || savedRequests.count == 0) {
         savedRequests = [[NSMutableArray alloc] init];
+        self.noRequestsLabel.hidden = NO;
     }
     
     [self startRequests];
@@ -51,9 +55,9 @@ alpha:1.0]
 }
 
 -(void)startRequests {
-    
     receivedResponses = [[NSMutableArray alloc] init];
     currentRequest = 0;
+    requesting = YES;
     [self makeRequest];
 }
 
@@ -63,6 +67,8 @@ alpha:1.0]
         ConnectionController *connection = [[ConnectionController alloc] initWithURL:[request objectForKey:@"requestURL"] methodType:[request objectForKey:@"methodType"] body:[request objectForKey:@"body"] andHeaders:[request objectForKey:@"headers"]];
         connection.delegate = self;
         [connection makeRequest];
+    } else {
+        requesting = NO;
     }
 }
 
@@ -76,6 +82,8 @@ alpha:1.0]
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.requestsTableView reloadData];
     });
+    
+    ((ConnectionController *)connection).delegate = nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -167,6 +175,10 @@ alpha:1.0]
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
         [savedRequests removeObjectAtIndex:indexPath.row];
         [tableView endUpdates];
+        
+        if(savedRequests.count == 0) {
+            self.noRequestsLabel.hidden = NO;
+        }
     }
 }
 /*
@@ -186,14 +198,19 @@ alpha:1.0]
         plistPath = [[NSBundle mainBundle] pathForResource:@"savedRequests" ofType:@"plist"];
     }
     
-    NSMutableArray *plistArray = [[[NSMutableArray alloc] initWithContentsOfFile:plistPath] mutableCopy];
-    NSLog(@"Plist array: %@", plistArray);
+    int oldCount = (int)savedRequests.count;
+    savedRequests = [[[NSMutableArray alloc] initWithContentsOfFile:plistPath] mutableCopy];
+    if(savedRequests.count > oldCount) {
+        // we have added a new request
+        self.noRequestsLabel.hidden = YES;
+        [self.requestsTableView reloadData];
+        if(!requesting)
+            [self makeRequest];
+    }
 }
 
 - (IBAction)editRequests:(id)sender {
-    
-    
-    if(currentRequest == savedRequests.count) {
+    if(currentRequest >= savedRequests.count) {
         [self.requestsTableView setEditing:!self.requestsTableView.isEditing animated:YES];
     
         if(self.requestsTableView.isEditing) {
@@ -206,6 +223,7 @@ alpha:1.0]
     
 }
 - (IBAction)addRequest:(id)sender {
+    selectedRequest = -1;
     [self performSegueWithIdentifier:@"showEditRequest" sender:nil];
 }
 @end

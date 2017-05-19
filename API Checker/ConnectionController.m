@@ -30,7 +30,8 @@
 
 -(void)makeRequest {
     
-    start = 0;
+    NSLog(@"Request Start: %@", self.urlString);
+    start = [NSDate timeIntervalSinceReferenceDate];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10.0];
     [request setHTTPMethod:self.methodType];
@@ -43,7 +44,7 @@
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
+        NSLog(@"Request end: %@", self.urlString);
         int time = (int)(([NSDate timeIntervalSinceReferenceDate] - start) * 1000);
         NSNumber *responseTime = [[NSNumber alloc] initWithInt:time];
         NSMutableDictionary *res = [[NSMutableDictionary alloc] init];

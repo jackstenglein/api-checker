@@ -22,9 +22,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no saved HTTP requests" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nVB-n6-qag">
+                                <rect key="frame" x="94" y="85" width="186" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="186" id="deZ-d2-MJE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
+                                <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="76" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LEN-yo-xih">
                                 <rect key="frame" x="0.0" y="70" width="375" height="548"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="requestTableViewCell" rowHeight="76" id="5Bw-0m-LIF" customClass="RequestTableViewCell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="76"/>
@@ -131,7 +140,9 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="nVB-n6-qag" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="66f-kq-BLg"/>
                             <constraint firstAttribute="trailing" secondItem="fAQ-Vn-lXQ" secondAttribute="trailing" id="E1d-aX-O49"/>
+                            <constraint firstItem="nVB-n6-qag" firstAttribute="top" secondItem="fAQ-Vn-lXQ" secondAttribute="bottom" constant="15" id="HWB-vR-bf6"/>
                             <constraint firstItem="fAQ-Vn-lXQ" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="Vcn-Dr-6DU"/>
                             <constraint firstItem="LEN-yo-xih" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="a3O-ZP-JyZ"/>
                             <constraint firstItem="fAQ-Vn-lXQ" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" id="b9j-HZ-uk4"/>
@@ -144,6 +155,7 @@
                     <tabBarItem key="tabBarItem" title="Requests" image="first" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="editButton" destination="MXJ-rl-tBI" id="d9V-YJ-bxk"/>
+                        <outlet property="noRequestsLabel" destination="nVB-n6-qag" id="Jz7-Qb-YMw"/>
                         <outlet property="requestsTableView" destination="LEN-yo-xih" id="Icj-Rt-Xz9"/>
                         <segue destination="v5Q-ZZ-taG" kind="show" identifier="showEditRequest" id="5NS-Bq-gyU"/>
                     </connections>

@@ -284,13 +284,23 @@
 
 - (IBAction)saveRequest:(id)sender {
     
+    NSString *url = self.requestStringField.text;
+    if([url isEqualToString:@""]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please enter a URL" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *close = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:close];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    } else if([url rangeOfString:@"http"].location != 0) {
+        url = [NSString stringWithFormat:@"http://%@", url];
+    }
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"savedRequests.plist"];
     
     NSMutableArray *plistArray = [[[NSMutableArray alloc] initWithContentsOfFile:plistPath] mutableCopy];
     if(plistArray == nil) plistArray = [[NSMutableArray alloc] init];
-    NSLog(@"Plist array before save: %@", plistArray);
     
     NSString *methodType;
     switch (selectedMethodType) {
@@ -318,9 +328,8 @@
     }
     
     NSNumber *timeout = [[NSNumber alloc] initWithInt:(selectedTimeout+1)*10];
-    NSDictionary *requestDict = [[NSDictionary alloc] initWithObjects:@[methodType, timeout, self.requestStringField.text, self.requestNameField.text, body, headers] forKeys:@[@"methodType", @"timeout", @"requestURL", @"requestName", @"body", @"headers"]];
+    NSDictionary *requestDict = [[NSDictionary alloc] initWithObjects:@[methodType, timeout, url, self.requestNameField.text, body, headers] forKeys:@[@"methodType", @"timeout", @"requestURL", @"requestName", @"body", @"headers"]];
     [plistArray addObject:requestDict];
-    NSLog(@"Plist array after save: %@", plistArray);
     
     BOOL saved = [plistArray writeToFile:plistPath atomically:YES];
     if(saved) NSLog(@"Saved!");

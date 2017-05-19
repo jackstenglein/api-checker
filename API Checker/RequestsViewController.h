@@ -16,5 +16,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *editButton;
 
 - (IBAction)addRequest:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *noRequestsLabel;
 
 @end

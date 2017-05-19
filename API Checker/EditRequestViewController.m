@@ -325,6 +325,8 @@
     BOOL saved = [plistArray writeToFile:plistPath atomically:YES];
     if(saved) NSLog(@"Saved!");
     else NSLog(@"Save failed");
+    
+    [self performSegueWithIdentifier:@"closeNewRequest" sender:nil];
 }
 
 

@@ -22,12 +22,6 @@
  */
 -(void)connectionFinished:(id)connection response:(NSDictionary *)response;
 
-/*!
- @brief Called when the connection fails.
- @param connection The id of this ConnectionController object.
- @param error The error message from the failure.
- */
--(void)connectionFailed:(id)connection error:(NSError *)error;
 @end
 
 /*!

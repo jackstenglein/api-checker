@@ -44,17 +44,14 @@
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSLog(@"Start inside block: %f", start);
         int time = (int)(([NSDate timeIntervalSinceReferenceDate] - start) * 1000);
         NSNumber *responseTime = [[NSNumber alloc] initWithInt:time];
+        NSMutableDictionary *res = [[NSMutableDictionary alloc] init];
+        [res setObject:self.urlString forKey:@"requestURL"];
         
-        if (error) {
-            [self.delegate connectionFailed:self error:error];
+        if(error != nil) {
+            [res setObject:error forKey:@"error"];
         } else {
-            NSLog(@"URL response: %@", response);
-            
-            NSMutableDictionary *res = [[NSMutableDictionary alloc] init];
-            [res setObject:response.URL.absoluteString forKey:@"requestURL"];
             [res setObject:[[NSNumber alloc] initWithInteger:((NSHTTPURLResponse *)response).statusCode] forKey:@"statusCode"];
             [res setObject:responseTime forKey:@"responseTime"];
             
@@ -62,13 +59,13 @@
             if(body != nil) {
                 [res setObject:body forKey:@"responseBody"];
             }
-            
-            [self.delegate connectionFinished:self response:res];
         }
+        
+        [self.delegate connectionFinished:self response:res];
+
     }];
     
     start = [NSDate timeIntervalSinceReferenceDate];
-    NSLog(@"Start outside block: %f", start);
     [dataTask resume];
 }
 

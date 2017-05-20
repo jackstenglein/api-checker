@@ -53,8 +53,10 @@
         if(error != nil) {
             [res setObject:error forKey:@"error"];
         } else {
-            [res setObject:[[NSNumber alloc] initWithInteger:((NSHTTPURLResponse *)response).statusCode] forKey:@"statusCode"];
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            [res setObject:[[NSNumber alloc] initWithInteger:httpResponse.statusCode] forKey:@"statusCode"];
             [res setObject:responseTime forKey:@"responseTime"];
+            [res setObject:httpResponse.allHeaderFields forKey:@"headers"];
             
             NSDictionary *body = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             if(body != nil) {

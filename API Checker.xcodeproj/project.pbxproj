@@ -22,6 +22,7 @@
 		C9442CCC1EC6542F00BE04AC /* EditRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CCB1EC6542F00BE04AC /* EditRequestViewController.m */; };
 		C9442CCF1EC68BC500BE04AC /* DictionaryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CCE1EC68BC500BE04AC /* DictionaryTableViewCell.m */; };
 		C9442CD21EC6910300BE04AC /* DataPair.m in Sources */ = {isa = PBXBuildFile; fileRef = C9442CD11EC6910300BE04AC /* DataPair.m */; };
+		C97F2E081ED0B07C005E4E1A /* ResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97F2E071ED0B07C005E4E1A /* ResponseViewController.m */; };
 		C9F1ED0A1ECD463600888439 /* ConnectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F1ED091ECD463600888439 /* ConnectionController.m */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,8 @@
 		C9442CCE1EC68BC500BE04AC /* DictionaryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DictionaryTableViewCell.m; sourceTree = "<group>"; };
 		C9442CD01EC6910300BE04AC /* DataPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataPair.h; sourceTree = "<group>"; };
 		C9442CD11EC6910300BE04AC /* DataPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataPair.m; sourceTree = "<group>"; };
+		C97F2E061ED0B07C005E4E1A /* ResponseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseViewController.h; sourceTree = "<group>"; };
+		C97F2E071ED0B07C005E4E1A /* ResponseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseViewController.m; sourceTree = "<group>"; };
 		C9F1ED081ECD463600888439 /* ConnectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionController.h; sourceTree = "<group>"; };
 		C9F1ED091ECD463600888439 /* ConnectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,6 +136,8 @@
 				C9F1ED091ECD463600888439 /* ConnectionController.m */,
 				C9442CB71EC6465F00BE04AC /* RequestsViewController.h */,
 				C9442CB81EC6465F00BE04AC /* RequestsViewController.m */,
+				C97F2E061ED0B07C005E4E1A /* ResponseViewController.h */,
+				C97F2E071ED0B07C005E4E1A /* ResponseViewController.m */,
 				C9442CBA1EC6467900BE04AC /* HistoryViewController.h */,
 				C9442CBB1EC6467900BE04AC /* HistoryViewController.m */,
 				C9442CBD1EC6468500BE04AC /* SettingsViewController.h */,
@@ -321,6 +326,7 @@
 				C9F1ED0A1ECD463600888439 /* ConnectionController.m in Sources */,
 				C9442CCC1EC6542F00BE04AC /* EditRequestViewController.m in Sources */,
 				C9442CC91EC64F7900BE04AC /* RequestTableViewCell.m in Sources */,
+				C97F2E081ED0B07C005E4E1A /* ResponseViewController.m in Sources */,
 				C9442C831EC6437700BE04AC /* main.m in Sources */,
 				C9442CBF1EC6468500BE04AC /* SettingsViewController.m in Sources */,
 				C9442CD21EC6910300BE04AC /* DataPair.m in Sources */,

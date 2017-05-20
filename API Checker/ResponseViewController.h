@@ -13,7 +13,7 @@ typedef enum {
     Headers
 }FooterType;
 
-@interface ResponseViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ResponseViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIScrollViewDelegate>
 
 @property (strong, nonatomic) NSDictionary *request;
 @property (strong, nonatomic) NSDictionary *response;

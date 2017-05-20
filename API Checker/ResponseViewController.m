@@ -23,6 +23,7 @@ alpha:1.0]
 @implementation ResponseViewController {
     FooterType footerType;
     NSArray *responseHeaderKeys;
+    NSMutableArray<NSNumber *> *displayTruncatedMode;
 }
 
 - (void)viewDidLoad {
@@ -33,6 +34,13 @@ alpha:1.0]
     
     [self setUpUI];
     responseHeaderKeys = [self.response[@"headers"] allKeys];
+    displayTruncatedMode = [[NSMutableArray alloc] initWithCapacity:responseHeaderKeys.count];
+    for(int i = 0; i < responseHeaderKeys.count; i++) {
+        [displayTruncatedMode addObject:@(NO)];
+    }
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] init];
+    NSLog(@"Scroll view gesture recognizers: %lu", scrollView.gestureRecognizers.count);
 }
 
 -(void)setUpUI {
@@ -80,9 +88,58 @@ alpha:1.0]
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DictionaryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"headersCell" forIndexPath:indexPath];
-    cell.keyTextField.text = responseHeaderKeys[indexPath.row];
-    cell.valueTextField.text = self.response[@"headers"][responseHeaderKeys[indexPath.row]];
+    if(displayTruncatedMode[indexPath.row].boolValue) {
+        cell.longValueScrollView.hidden = NO;
+        cell.longValueScrollView.delegate = self;
+        cell.longValueLabel.text = self.response[@"headers"][responseHeaderKeys[indexPath.row]];
+        
+        if(cell.longValueScrollView.gestureRecognizers.count == 2) {
+            UITapGestureRecognizer *singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)];
+            singleTapGestureRecognizer.cancelsTouchesInView = NO;
+            [cell.longValueScrollView addGestureRecognizer:singleTapGestureRecognizer];
+        }
+        
+        cell.keyTextField.hidden = YES;
+        cell.valueTextField.hidden = YES;
+        cell.colonLabel.hidden = YES;
+    } else {
+        cell.longValueScrollView.hidden = YES;
+        
+        cell.keyTextField.text = responseHeaderKeys[indexPath.row];
+        cell.valueTextField.text = self.response[@"headers"][responseHeaderKeys[indexPath.row]];
+        //[cell.longValueScrollView setContentSize:CGSizeMake(cell.longValueLabel.bounds.size.width, cell.longValueLabel.bounds.size.height)];
+        
+        
+        [cell.keyTextFieldTrailing setActive:YES];
+        cell.keyTextField.hidden = NO;
+        cell.valueTextField.hidden = NO;
+        cell.colonLabel.hidden = NO;
+    }
+    
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    DictionaryTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    CGSize textSize = [cell.valueTextField.text sizeWithFont:cell.valueTextField.font];
+    if(textSize.width > cell.valueTextField.bounds.size.width || displayTruncatedMode[indexPath.row].boolValue) {
+        [displayTruncatedMode replaceObjectAtIndex:indexPath.row withObject:@(!displayTruncatedMode[indexPath.row].boolValue)];
+        [tableView reloadData];
+    } else {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+- (void)singleTap:(UITapGestureRecognizer *)gesture {
+    for(int i = 0; i < displayTruncatedMode.count; i++) {
+        if(displayTruncatedMode[i].boolValue) {
+            DictionaryTableViewCell *cell = [self.headersTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+            if([cell.longValueScrollView.gestureRecognizers containsObject:gesture]) {
+                [displayTruncatedMode replaceObjectAtIndex:i withObject:@(NO)];
+                [self.headersTableView reloadData];
+            }
+        }
+    }
 }
 
 /*

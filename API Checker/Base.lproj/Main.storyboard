@@ -818,7 +818,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FSe-1c-qos">
                                 <rect key="frame" x="0.0" y="230" width="375" height="388"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0js-qy-rg1">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0js-qy-rg1">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="388"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
@@ -835,7 +835,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Key" textAlignment="natural" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="epX-o7-Yaf">
+                                                        <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Key" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="1" translatesAutoresizingMaskIntoConstraints="NO" id="epX-o7-Yaf">
                                                             <rect key="frame" x="15" y="14" width="161" height="16"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -844,7 +844,7 @@
                                                                 <outlet property="delegate" destination="v5Q-ZZ-taG" id="5R2-HZ-xsk"/>
                                                             </connections>
                                                         </textField>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Value" textAlignment="natural" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="AYM-E4-EN8">
+                                                        <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Value" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="AYM-E4-EN8">
                                                             <rect key="frame" x="206" y="14" width="161" height="16"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -853,20 +853,47 @@
                                                                 <outlet property="delegate" destination="v5Q-ZZ-taG" id="5G6-HK-2Nl"/>
                                                             </connections>
                                                         </textField>
+                                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5In-uO-JY6">
+                                                            <rect key="frame" x="15" y="9" width="352" height="26"/>
+                                                            <subviews>
+                                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMR-w2-fqZ">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="33" height="25"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="KMR-w2-fqZ" firstAttribute="leading" secondItem="5In-uO-JY6" secondAttribute="leading" id="PrQ-sN-W5D"/>
+                                                                <constraint firstItem="KMR-w2-fqZ" firstAttribute="top" secondItem="5In-uO-JY6" secondAttribute="top" id="hli-Gs-8f4"/>
+                                                                <constraint firstAttribute="height" constant="26" id="idG-lr-l0b"/>
+                                                                <constraint firstAttribute="trailing" secondItem="KMR-w2-fqZ" secondAttribute="trailing" constant="8" id="jA5-eK-xeX"/>
+                                                                <constraint firstItem="KMR-w2-fqZ" firstAttribute="centerY" secondItem="5In-uO-JY6" secondAttribute="centerY" id="pa7-iH-eQ3"/>
+                                                                <constraint firstAttribute="bottom" secondItem="KMR-w2-fqZ" secondAttribute="bottom" id="vB2-0Y-lto"/>
+                                                            </constraints>
+                                                        </scrollView>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstItem="ZXE-8s-L7e" firstAttribute="leading" secondItem="epX-o7-Yaf" secondAttribute="trailing" constant="8" id="5KG-aC-Rgf"/>
                                                         <constraint firstAttribute="trailing" secondItem="AYM-E4-EN8" secondAttribute="trailing" constant="8" id="AUy-CX-tqV"/>
+                                                        <constraint firstAttribute="trailing" secondItem="5In-uO-JY6" secondAttribute="trailing" constant="8" id="I2t-Qh-Ibg"/>
                                                         <constraint firstItem="AYM-E4-EN8" firstAttribute="leading" secondItem="ZXE-8s-L7e" secondAttribute="trailing" constant="15" id="K66-6n-Zli"/>
-                                                        <constraint firstItem="ZXE-8s-L7e" firstAttribute="leading" secondItem="epX-o7-Yaf" secondAttribute="trailing" constant="8" id="P2W-h4-4xc"/>
+                                                        <constraint firstItem="5In-uO-JY6" firstAttribute="centerY" secondItem="epX-o7-Yaf" secondAttribute="centerY" id="Pcn-FQ-CQp"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="epX-o7-Yaf" secondAttribute="trailing" constant="8" id="a26-t7-TcI"/>
                                                         <constraint firstItem="epX-o7-Yaf" firstAttribute="centerY" secondItem="CF7-da-90a" secondAttribute="centerY" id="cpv-VB-wIc"/>
                                                         <constraint firstItem="ZXE-8s-L7e" firstAttribute="centerY" secondItem="CF7-da-90a" secondAttribute="centerY" constant="-4" id="eey-O0-H4n"/>
                                                         <constraint firstItem="AYM-E4-EN8" firstAttribute="centerY" secondItem="CF7-da-90a" secondAttribute="centerY" id="oDe-5f-J1P"/>
+                                                        <constraint firstItem="5In-uO-JY6" firstAttribute="leading" secondItem="epX-o7-Yaf" secondAttribute="leading" id="uwZ-aj-ysH"/>
                                                         <constraint firstItem="epX-o7-Yaf" firstAttribute="leading" secondItem="CF7-da-90a" secondAttribute="leading" constant="15" id="vos-Iw-qhU"/>
                                                         <constraint firstItem="ZXE-8s-L7e" firstAttribute="centerX" secondItem="CF7-da-90a" secondAttribute="centerX" id="wvq-l3-k79"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
+                                                    <outlet property="colonLabel" destination="ZXE-8s-L7e" id="XS4-Zv-XTz"/>
                                                     <outlet property="keyTextField" destination="epX-o7-Yaf" id="cZk-As-jqb"/>
+                                                    <outlet property="keyTextFieldTrailing" destination="5KG-aC-Rgf" id="dyt-rL-hCd"/>
+                                                    <outlet property="longValueLabel" destination="KMR-w2-fqZ" id="VXI-du-xOu"/>
+                                                    <outlet property="longValueScrollView" destination="5In-uO-JY6" id="nXB-j2-R98"/>
                                                     <outlet property="valueTextField" destination="AYM-E4-EN8" id="qBn-nw-b3H"/>
                                                 </connections>
                                             </tableViewCell>

@@ -7,6 +7,7 @@
 //
 
 #import "RequestsViewController.h"
+#import "ResponseViewController.h"
 #import "RequestTableViewCell.h"
 #import "Constants.h"
 
@@ -73,8 +74,8 @@ alpha:1.0]
 }
 
 -(void)connectionFinished:(id)connection response:(NSDictionary *)response {
-    NSLog(@"JSON Response: %@", response);
-    NSLog(@"Status description: %@", [Constants descriptionForStatusCode:[response[@"statusCode"] intValue]]);
+    //NSLog(@"JSON Response: %@", response);
+    //NSLog(@"Status description: %@", [Constants descriptionForStatusCode:[response[@"statusCode"] intValue]]);
     [receivedResponses addObject:response];
     currentRequest++;
     [self makeRequest];
@@ -148,6 +149,11 @@ alpha:1.0]
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    selectedRequest = (int)indexPath.row;
+    [self performSegueWithIdentifier:@"showResponse" sender:nil];
+}
+
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Prevent swipe to delete
     if (tableView.isEditing) {
@@ -181,15 +187,20 @@ alpha:1.0]
         }
     }
 }
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if([[segue identifier] isEqualToString:@"showResponse"]) {
+        ResponseViewController *destVC = [segue destinationViewController];
+        destVC.request = [savedRequests objectAtIndex:selectedRequest];
+        destVC.response = [receivedResponses objectAtIndex:selectedRequest];
+    }
 }
-*/
+
 
 -(IBAction)returnFromNewRequest:(UIStoryboardSegue *)segue {
     

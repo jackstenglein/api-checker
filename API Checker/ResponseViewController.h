@@ -13,7 +13,7 @@ typedef enum {
     Headers
 }FooterType;
 
-@interface ResponseViewController : UIViewController
+@interface ResponseViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) NSDictionary *request;
 @property (strong, nonatomic) NSDictionary *response;
@@ -32,7 +32,11 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIView *bodyUnderline;
 @property (strong, nonatomic) IBOutlet UIView *headersUnderline;
 
+@property (strong, nonatomic) IBOutlet UIView *bodyFooterView;
+@property (strong, nonatomic) IBOutlet UITextView *bodyTextView;
 
+@property (strong, nonatomic) IBOutlet UIView *headersFooterView;
+@property (strong, nonatomic) IBOutlet UITableView *headersTableView;
 - (IBAction)changeFooterType:(UIButton *)sender;
 
 @end

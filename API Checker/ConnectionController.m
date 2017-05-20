@@ -58,9 +58,8 @@
             [res setObject:responseTime forKey:@"responseTime"];
             [res setObject:httpResponse.allHeaderFields forKey:@"headers"];
             
-            NSDictionary *body = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            if(body != nil) {
-                [res setObject:body forKey:@"responseBody"];
+            if(data != nil) {
+                [res setObject:data forKey:@"responseBody"];
             }
         }
         

@@ -198,6 +198,7 @@ alpha:1.0]
         ResponseViewController *destVC = [segue destinationViewController];
         destVC.request = [savedRequests objectAtIndex:selectedRequest];
         destVC.response = [receivedResponses objectAtIndex:selectedRequest];
+        destVC.requestNumber = [[NSNumber alloc] initWithInt:selectedRequest];
     }
 }
 
@@ -218,6 +219,8 @@ alpha:1.0]
         if(!requesting)
             [self makeRequest];
     }
+    
+    NSLog(@"Saved requests: %@", savedRequests);
 }
 
 - (IBAction)editRequests:(id)sender {

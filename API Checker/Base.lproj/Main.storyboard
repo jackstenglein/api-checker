@@ -192,7 +192,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="cMX-qL-Krt" kind="unwind" identifier="closeNewRequest" unwindAction="returnFromNewRequest:" id="PZL-A2-nke"/>
+                                            <action selector="cancel:" destination="v5Q-ZZ-taG" eventType="touchUpInside" id="X7t-6S-d50"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4kV-gT-nvo">
@@ -602,12 +602,15 @@
                         <outlet property="tableView" destination="Fnd-1F-GTp" id="SNn-e0-jLD"/>
                         <outlet property="timeoutButton" destination="IDZ-zp-CKO" id="wGY-8i-S2y"/>
                         <outlet property="timeoutView" destination="4f0-gQ-eVS" id="QN9-Br-piE"/>
+                        <outlet property="titleLabel" destination="Q9g-ro-oSu" id="DPP-41-CoN"/>
+                        <segue destination="cMX-qL-Krt" kind="unwind" identifier="returnToSavedRequests" unwindAction="returnFromNewRequest:" id="MPF-IU-WDQ"/>
+                        <segue destination="cMX-qL-Krt" kind="unwind" identifier="returnToResponse" unwindAction="returnFromEditRequest:" id="EZC-e2-q7d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lFc-qv-Zax" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="cMX-qL-Krt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2122" y="-589"/>
+            <point key="canvasLocation" x="2497" y="-424"/>
         </scene>
         <!--History-->
         <scene sceneID="wg7-f3-ORb">
@@ -663,18 +666,21 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sLO-N3-9xd">
-                                        <rect key="frame" x="10" y="37" width="48" height="30"/>
-                                        <state key="normal" title="Cancel">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDL-oZ-2LU">
-                                        <rect key="frame" x="328" y="37" width="37" height="30"/>
-                                        <state key="normal" title="Done">
+                                        <rect key="frame" x="10" y="37" width="34" height="30"/>
+                                        <state key="normal" title="Back">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="saveRequest:" destination="v5Q-ZZ-taG" eventType="touchUpInside" id="env-0t-vJI"/>
+                                            <segue destination="8CA-l2-peK" kind="unwind" unwindAction="returnFromNewRequest:" id="OOn-Z4-mnG"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDL-oZ-2LU">
+                                        <rect key="frame" x="335" y="37" width="30" height="30"/>
+                                        <state key="normal" title="Edit">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="editRequest:" destination="He3-eO-zgy" eventType="touchUpInside" id="o8i-xw-0KF"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -964,6 +970,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q7N-yK-THL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="8CA-l2-peK" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1733.5999999999999" y="264.91754122938534"/>
         </scene>

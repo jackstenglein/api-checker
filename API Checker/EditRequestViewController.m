@@ -33,11 +33,34 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUpUI];
-    selectedTimeout = 5;
+    NSLog(@"Request: %@", self.request);
+    
     bodyData = [[NSMutableArray alloc] init];
     headersData = [[NSMutableArray alloc] init];
-    [headersData addObject:[[DataPair alloc] initWithKey:@"content-type" andValue:@"application/json"]];
-    [headersData addObject:[[DataPair alloc] initWithKey:@"cache-control" andValue:@"no-cache"]];
+    if(self.request != nil) {
+        NSDictionary *body = self.request[@"body"];
+        for(NSString *key in body) {
+            [bodyData addObject:[[DataPair alloc] initWithKey:key andValue:body[key]]];
+        }
+        
+        NSDictionary *headers = self.request[@"headers"];
+        for(NSString *key in headers) {
+            [headersData addObject:[[DataPair alloc] initWithKey:key andValue:headers[key]]];
+        }
+        
+        [self.methodTypeButton setTitle:self.request[@"methodType"] forState:UIControlStateNormal];
+        self.requestNameField.text = self.request[@"requestName"];
+        self.requestStringField.text = self.request[@"requestURL"];
+        int timeout = [self.request[@"timeout"] intValue];
+        [self.timeoutButton setTitle:[NSString stringWithFormat:@"%ds", timeout] forState:UIControlStateNormal];
+        selectedTimeout = timeout/10 - 1;
+        
+        self.titleLabel.text = @"Edit Request";
+    } else {
+        selectedTimeout = 5;
+        [headersData addObject:[[DataPair alloc] initWithKey:@"content-type" andValue:@"application/json"]];
+        [headersData addObject:[[DataPair alloc] initWithKey:@"cache-control" andValue:@"no-cache"]];
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -322,20 +345,33 @@
     }
     
     NSMutableDictionary *headers = [[NSMutableDictionary alloc] init];
-    for(int i = 0; i < headers.count; i++) {
+    for(int i = 0; i < headersData.count; i++) {
         DataPair *data = [headersData objectAtIndex:i];
         [headers setObject:data.value forKey:data.key];
     }
     
     NSNumber *timeout = [[NSNumber alloc] initWithInt:(selectedTimeout+1)*10];
     NSDictionary *requestDict = [[NSDictionary alloc] initWithObjects:@[methodType, timeout, url, self.requestNameField.text, body, headers] forKeys:@[@"methodType", @"timeout", @"requestURL", @"requestName", @"body", @"headers"]];
-    [plistArray addObject:requestDict];
+    
+    if(self.request != nil) {
+        [plistArray replaceObjectAtIndex:self.requestNumber.intValue withObject:requestDict];
+    } else {
+        [plistArray addObject:requestDict];
+    }
     
     BOOL saved = [plistArray writeToFile:plistPath atomically:YES];
     if(saved) NSLog(@"Saved!");
     else NSLog(@"Save failed");
     
-    [self performSegueWithIdentifier:@"closeNewRequest" sender:nil];
+    [self cancel:nil];
+}
+
+- (IBAction)cancel:(id)sender {
+    if(self.request != nil) {
+        [self performSegueWithIdentifier:@"returnToResponse" sender:nil];
+    } else {
+        [self performSegueWithIdentifier:@"returnToSavedRequests" sender:nil];
+    }
 }
 
 

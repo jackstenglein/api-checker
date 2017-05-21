@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum {
-    Body,
-    Headers
-}FooterType;
+
 
 @interface ResponseViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIScrollViewDelegate>
+
+@property (strong, nonatomic) NSNumber *requestNumber;
 
 @property (strong, nonatomic) NSDictionary *request;
 @property (strong, nonatomic) NSDictionary *response;
@@ -39,4 +38,5 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UITableView *headersTableView;
 - (IBAction)changeFooterType:(UIButton *)sender;
 
+- (IBAction)editRequest:(id)sender;
 @end

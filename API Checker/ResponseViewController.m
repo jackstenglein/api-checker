@@ -8,20 +8,21 @@
 
 #import "ResponseViewController.h"
 #import "DictionaryTableViewCell.h"
+#import "EditRequestViewController.h"
 #import "Constants.h"
 
 #define UIColorFromHex(hexValue) \
 [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 \
-green:((float)((hexValue & 0x00FF00) >>  8))/255.0 \
-blue:((float)(hexValue & 0x0000FF))/255.0 \
-alpha:1.0]
+    green:((float)((hexValue & 0x00FF00) >>  8))/255.0 \
+    blue:((float)(hexValue & 0x0000FF))/255.0 \
+    alpha:1.0]
 
 @interface ResponseViewController ()
 
 @end
 
 @implementation ResponseViewController {
-    FooterType footerType;
+    FooterTypes footerType;
     NSArray *responseHeaderKeys;
     NSMutableArray<NSNumber *> *displayTruncatedMode;
 }
@@ -67,11 +68,13 @@ alpha:1.0]
     }
     
     // set the body text to a pretty-printed string
-    NSError *error;
-    NSObject *obj = [NSJSONSerialization JSONObjectWithData:self.response[@"responseBody"] options:kNilOptions error:&error];
-    NSData *prettyPrintedData = [NSJSONSerialization dataWithJSONObject:obj options:NSJSONWritingPrettyPrinted error:&error];
-    NSString *string = [[NSString alloc] initWithData:prettyPrintedData encoding:NSUTF8StringEncoding];
-    self.bodyTextView.text = string;
+    if(self.response[@"responseBody"]){
+        NSError *error;
+        NSObject *obj = [NSJSONSerialization JSONObjectWithData:self.response[@"responseBody"] options:kNilOptions error:&error];
+        NSData *prettyPrintedData = [NSJSONSerialization dataWithJSONObject:obj options:NSJSONWritingPrettyPrinted error:&error];
+        NSString *string = [[NSString alloc] initWithData:prettyPrintedData encoding:NSUTF8StringEncoding];
+        self.bodyTextView.text = string;
+    }
     
     // format the headers table view
     self.headersTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -142,15 +145,20 @@ alpha:1.0]
     }
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if([[segue identifier] isEqualToString:@"showEditRequest"]) {
+        EditRequestViewController *destVC = [segue destinationViewController];
+        destVC.request = self.request;
+        destVC.requestNumber = self.requestNumber;
+    }
 }
-*/
+
 
 - (IBAction)changeFooterType:(UIButton *)sender {
     UIButton *selectedButton;
@@ -158,7 +166,7 @@ alpha:1.0]
     UIView *selectedLine;
     UIView *unselectedLine;
     
-    footerType = (FooterType)sender.tag;
+    footerType = (FooterTypes)sender.tag;
     if(footerType == Body) {
         selectedButton = self.bodyButton;
         unselectedButton = self.headersButton;
@@ -180,4 +188,13 @@ alpha:1.0]
     selectedLine.hidden = NO;
     unselectedLine.hidden = YES;
 }
+
+- (IBAction)editRequest:(id)sender {
+    [self performSegueWithIdentifier:@"showEditRequest" sender:nil];
+}
+
+-(IBAction)returnFromEditRequest:(UIStoryboardSegue *)sender {
+    
+}
+
 @end

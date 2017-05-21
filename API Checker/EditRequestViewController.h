@@ -22,6 +22,13 @@ typedef enum {
 
 @interface EditRequestViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource, UITableViewDelegate>
 
+
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+
+@property (strong, nonatomic) NSNumber *requestNumber;
+
+@property (strong, nonatomic) NSDictionary *request;
+
 /*!
  @brief View showing the current HTTP method.
  @discussion This view holds the button that allows the user to switch the method. The view requires an outlet to change the border styling.
@@ -166,5 +173,7 @@ typedef enum {
 
 
 - (IBAction)saveRequest:(id)sender;
+
+- (IBAction)cancel:(id)sender;
 
 @end

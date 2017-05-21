@@ -73,12 +73,27 @@ alpha:1.0]
     }
 }
 
+-(void)makeSelectedRequest {
+    
+    arbirtraryLoad = YES;
+    NSDictionary *request = [savedRequests objectAtIndex:selectedRequest];
+    ConnectionController *connection = [[ConnectionController alloc] initWithURL:[request objectForKey:@"requestURL"] methodType:[request objectForKey:@"methodType"] body:[request objectForKey:@"body"] andHeaders:[request objectForKey:@"headers"]];
+    connection.delegate = self;
+    [connection makeRequest];
+    
+}
+
 -(void)connectionFinished:(id)connection response:(NSDictionary *)response {
     //NSLog(@"JSON Response: %@", response);
     //NSLog(@"Status description: %@", [Constants descriptionForStatusCode:[response[@"statusCode"] intValue]]);
-    [receivedResponses addObject:response];
-    currentRequest++;
-    [self makeRequest];
+    if(!arbirtraryLoad) {
+        [receivedResponses addObject:response];
+        currentRequest++;
+        [self makeRequest];
+    } else {
+        [receivedResponses replaceObjectAtIndex:selectedRequest withObject:response];
+        arbirtraryLoad = NO;
+    }
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.requestsTableView reloadData];
@@ -210,14 +225,18 @@ alpha:1.0]
         plistPath = [[NSBundle mainBundle] pathForResource:@"savedRequests" ofType:@"plist"];
     }
     
-    int oldCount = (int)savedRequests.count;
-    savedRequests = [[[NSMutableArray alloc] initWithContentsOfFile:plistPath] mutableCopy];
-    if(savedRequests.count > oldCount) {
+    NSMutableArray *newRequests = [[[NSMutableArray alloc] initWithContentsOfFile:plistPath] mutableCopy];
+    if(newRequests.count > savedRequests.count) {
         // we have added a new request
+        savedRequests = newRequests;
         self.noRequestsLabel.hidden = YES;
         [self.requestsTableView reloadData];
         if(!requesting)
             [self makeRequest];
+    } else if(![[newRequests objectAtIndex:selectedRequest] isEqual:[savedRequests objectAtIndex:selectedRequest]]) {
+        savedRequests = newRequests;
+        [self.requestsTableView reloadData];
+        [self makeSelectedRequest];
     }
     
     NSLog(@"Saved requests: %@", savedRequests);

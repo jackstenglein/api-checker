@@ -363,7 +363,11 @@
     if(saved) NSLog(@"Saved!");
     else NSLog(@"Save failed");
     
-    [self cancel:nil];
+    if(self.request == nil || ![requestDict isEqual:self.request]) {
+        [self performSegueWithIdentifier:@"returnToSavedRequests" sender:nil];
+    } else {
+        [self performSegueWithIdentifier:@"returnToResponse" sender:nil];
+    }
 }
 
 - (IBAction)cancel:(id)sender {

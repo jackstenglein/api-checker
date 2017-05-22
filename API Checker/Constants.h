@@ -11,6 +11,8 @@
 
 @interface Constants : NSObject
 +(NSAttributedString *)descriptionForStatusCode:(int)statusCode;
++(NSString *)prettyPrintXML:(NSString *)xmlString;
++(NSAttributedString *)coloredJSON:(NSString *)rawString;
 @end
 
 #endif /* Constants_h */

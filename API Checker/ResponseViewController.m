@@ -9,6 +9,7 @@
 #import "ResponseViewController.h"
 #import "DictionaryTableViewCell.h"
 #import "EditRequestViewController.h"
+#import "JSONSyntaxHighlight.h"
 #import "Constants.h"
 
 #define UIColorFromHex(hexValue) \
@@ -69,11 +70,23 @@
     
     // set the body text to a pretty-printed string
     if(self.response[@"responseBody"]){
+        NSString *string;
         NSError *error;
         NSObject *obj = [NSJSONSerialization JSONObjectWithData:self.response[@"responseBody"] options:kNilOptions error:&error];
-        NSData *prettyPrintedData = [NSJSONSerialization dataWithJSONObject:obj options:NSJSONWritingPrettyPrinted error:&error];
-        NSString *string = [[NSString alloc] initWithData:prettyPrintedData encoding:NSUTF8StringEncoding];
-        self.bodyTextView.text = string;
+        if(obj == nil) {
+            string = [[NSString alloc] initWithData:self.response[@"responseBody"] encoding:NSUTF8StringEncoding];
+            if(string == nil)
+                string = [[NSString alloc] initWithData:self.response[@"responseBody"] encoding:NSASCIIStringEncoding];
+            
+            self.bodyTextView.text = string;
+        } else {
+            JSONSyntaxHighlight *jsh = [[JSONSyntaxHighlight alloc] initWithJSON:obj];
+            jsh.nonStringAttributes = @{NSForegroundColorAttributeName: UIColorFromHex(0x00008b)};
+            jsh.stringAttributes = @{NSForegroundColorAttributeName: UIColorFromHex(0x2a00ff)};
+            jsh.keyAttributes = @{NSForegroundColorAttributeName: UIColorFromHex(0xE32636)};
+            NSAttributedString *test = [jsh highlightJSON];
+            self.bodyTextView.attributedText = test;
+        }
     }
     
     // format the headers table view
